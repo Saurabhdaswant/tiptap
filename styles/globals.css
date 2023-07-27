@@ -25,3 +25,38 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* .ce-header {
+  font-size: 2em;
+  font-weight: bold;
+} */
+
+#editorjs h1 {
+  font-size: 2em; /* 32px */
+  font-weight: bold;
+}
+
+#editorjs h2 {
+  font-size: 1.5em; /* 24px */
+  font-weight: bold;
+}
+
+#editorjs h3 {
+  font-size: 1.17em; /* 18.7px */
+  font-weight: bold;
+}
+
+#editorjs h4 {
+  font-size: 1em; /* 16px */
+  font-weight: bold;
+}
+
+#editorjs h5 {
+  font-size: 0.83em; /* 13.28px */
+  font-weight: bold;
+}
+
+#editorjs h6 {
+  font-size: 0.67em; /* 10.72px */
+  font-weight: bold;
+}

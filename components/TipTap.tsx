@@ -1,19 +1,50 @@
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { useEffect, useRef, useState } from "react";
+import EditorJS from "@editorjs/editorjs";
 
-const Tiptap = () => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: "<p>Hello World! 🌎️</p>",
-    editorProps: {
-      attributes: {
-        class:
-          "w-full rounded-md resize-none border-[#3c3c3c] bg-[#2A2A2A] p-3   text-[#a2a2a2] placeholder-[#a2a2a2] focus:border-[#3c3c3c] focus:bg-[#1a1a1a]  focus:outline-none focus:ring-0",
-      },
-    },
-  });
+const EditorComponent = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  const ref = useRef<EditorJS>();
 
-  return <EditorContent editor={editor} />;
+  const intializeEditor = async () => {
+    const EditorJS = (await import("@editorjs/editorjs")).default;
+    const Header = (await import("@editorjs/header")).default;
+    const List = (await import("@editorjs/list")).default;
+
+    if (!ref.current) {
+      const editor = new EditorJS({
+        holder: "editorjs",
+        tools: {
+          header: Header,
+          list: List,
+        },
+      });
+      ref.current = editor;
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMounted(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      await intializeEditor();
+    };
+
+    if (isMounted) {
+      init();
+
+      return () => {
+        if (ref.current) {
+          ref.current.destroy();
+        }
+      };
+    }
+  }, [isMounted]);
+
+  return <div className="bg-white text-black h-full w-full" id="editorjs" />;
 };
 
-export default Tiptap;
+export default EditorComponent;
